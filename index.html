@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 15px; background: #f4f4f9; color: #333; }
+        .item-card { 
+            background: white; padding: 15px; border-radius: 12px; 
+            margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .info { flex-grow: 1; }
+        .name { font-weight: bold; font-size: 1.1em; }
+        .price { color: #666; font-size: 0.9em; }
+        .controls { display: flex; align-items: center; gap: 15px; }
+        .btn-circle { 
+            width: 30px; height: 30px; border-radius: 50%; border: none;
+            background: #0088cc; color: white; font-size: 20px; cursor: pointer;
+        }
+        .count { font-weight: bold; min-width: 20px; text-align: center; }
+        .footer { 
+            position: fixed; bottom: 0; left: 0; right: 0; padding: 15px; 
+            background: white; border-top: 1px solid #ddd; display: flex; flex-direction: column; gap: 10px;
+        }
+        select { padding: 8px; border-radius: 5px; border: 1px solid #ccc; }
+        #send-btn { 
+            background: #28a745; color: white; border: none; padding: 12px; 
+            border-radius: 8px; font-weight: bold; width: 100%; 
+        }
+    </style>
+</head>
+<body>
+
+    <div id="menu"></div>
+
+    <div style="height: 150px;"></div> <!-- Отступ под футер -->
+
+    <div class="footer">
+        <select id="payment">
+            <option value="Наличные">💵 Наличные</option>
+            <option value="Карта">💳 Карта</option>
+        </select>
+        <button id="send-btn" onclick="sendAllData()">Оформить продажу</button>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+       const products = [
+    // Напитки
+    { id: 1, name: "Кола 1л", buyPrice: 492, sellPrice: 1000 },
+    { id: 2, name: "Спрайт 1л", buyPrice: 492, sellPrice: 1000 },
+    { id: 3, name: "Фанта 1л", buyPrice: 619, sellPrice: 1000 },
+    { id: 4, name: "Фьюс ти (Клуб/Дыня) 1л", buyPrice: 455, sellPrice: 900 },
+    { id: 5, name: "Фьюс ти (Персик) 1л", buyPrice: 455, sellPrice: 900 },
+    { id: 6, name: "Фьюс ти (Лимон) 1л", buyPrice: 455, sellPrice: 900 },
+    { id: 7, name: "Бон аква б/г 1л", buyPrice: 275, sellPrice: 500 },
+    { id: 8, name: "Бон аква с/г 1л", buyPrice: 275, sellPrice: 500 },
+    { id: 9, name: "Мохито", buyPrice: 700, sellPrice: 1000 },
+
+    // Мороженое
+    { id: 10, name: "Айза шоколадное", buyPrice: 220, sellPrice: 500 },
+    { id: 11, name: "Ренмилк пломбир", buyPrice: 385, sellPrice: 600 },
+    { id: 12, name: "Ренмилк сливочное", buyPrice: 313, sellPrice: 600 },
+    { id: 13, name: "Ренмилк шоколадное", buyPrice: 313, sellPrice: 600 },
+    { id: 14, name: "Шинлайн снеговик", buyPrice: 244, sellPrice: 500 },
+    { id: 15, name: "Эскимо Медведица", buyPrice: 264, sellPrice: 500 },
+    { id: 16, name: "Айза клубника", buyPrice: 209, sellPrice: 500 },
+    { id: 17, name: "Ностальгия", buyPrice: 402, sellPrice: 500 },
+    { id: 18, name: "Бомба фисташка", buyPrice: 275, sellPrice: 500 },
+    { id: 19, name: "Бомба ваниль", buyPrice: 275, sellPrice: 500 },
+    { id: 20, name: "Миша пломбир", buyPrice: 374, sellPrice: 600 },
+    { id: 21, name: "Миша черника", buyPrice: 374, sellPrice: 600 },
+    { id: 22, name: "Миша шоколадный", buyPrice: 374, sellPrice: 600 },
+    { id: 23, name: "Фруктовый лед", buyPrice: 127, sellPrice: 300 },
+
+    // Снеки и прочее
+    { id: 24, name: "Гризли (Шашлык/Краб/Курт)", buyPrice: 270, sellPrice: 600 },
+    { id: 25, name: "Семечки Джин", buyPrice: 382, sellPrice: 700 },
+    { id: 26, name: "Кириешки", buyPrice: 84, sellPrice: 300 },
+    { id: 27, name: "Лед 1 кг", buyPrice: 650, sellPrice: 1200 },
+    { id: 28, name: "Лед 500 гр", buyPrice: 450, sellPrice: 800 },
+    { id: 29, name: "Уголь (мешок)", buyPrice: 1173, sellPrice: 2500 },
+    { id: 30, name: "Розжиг", buyPrice: 932, sellPrice: 1500 }
+];
+
+        let cart = {};
+
+        function renderMenu() {
+            const container = document.getElementById('menu');
+            products.forEach(p => {
+                cart[p.id] = 0;
+                const div = document.createElement('div');
+                div.className = 'item-card';
+                div.innerHTML = `
+                    <div class="info">
+                        <div class="name">${p.name}</div>
+                        <div class="price">${p.sellPrice} руб.</div>
+                    </div>
+                    <div class="controls">
+                        <button class="btn-circle" onclick="change(${p.id}, -1)">-</button>
+                        <span class="count" id="count-${p.id}">0</span>
+                        <button class="btn-circle" onclick="change(${p.id}, 1)">+</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function change(id, delta) {
+            cart[id] = Math.max(0, cart[id] + delta);
+            document.getElementById(`count-${id}`).innerText = cart[id];
+        }
+
+        function sendAllData() {
+            let soldItems = [];
+            products.forEach(p => {
+                if (cart[p.id] > 0) {
+                    soldItems.push({
+                        item: p.name,
+                        quantity: cart[p.id],
+                        total_revenue: p.sellPrice * cart[p.id],
+                        total_profit: (p.sellPrice - p.buyPrice) * cart[p.id],
+                        payment_method: document.getElementById('payment').value
+                    });
+                }
+            });
+
+            if (soldItems.length > 0) {
+                tg.sendData(JSON.stringify(soldItems));
+            } else {
+                alert("Сначала выберите товар!");
+            }
+        }
+
+        renderMenu();
+    </script>
+</body>
+</html>
