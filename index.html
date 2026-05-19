@@ -49,43 +49,40 @@
         tg.expand();
 
        const products = [
-    // Напитки
-    { id: 1, name: "Кола 1л", buyPrice: 492, sellPrice: 1000 },
-    { id: 2, name: "Спрайт 1л", buyPrice: 492, sellPrice: 1000 },
-    { id: 3, name: "Фанта 1л", buyPrice: 619, sellPrice: 1000 },
-    { id: 4, name: "Фьюс ти (Клуб/Дыня) 1л", buyPrice: 455, sellPrice: 900 },
-    { id: 5, name: "Фьюс ти (Персик) 1л", buyPrice: 455, sellPrice: 900 },
-    { id: 6, name: "Фьюс ти (Лимон) 1л", buyPrice: 455, sellPrice: 900 },
-    { id: 7, name: "Бон аква б/г 1л", buyPrice: 275, sellPrice: 500 },
-    { id: 8, name: "Бон аква с/г 1л", buyPrice: 275, sellPrice: 500 },
-    { id: 9, name: "Мохито", buyPrice: 700, sellPrice: 1000 },
-
-    // Мороженое
-    { id: 10, name: "Айза шоколадное", buyPrice: 220, sellPrice: 500 },
-    { id: 11, name: "Ренмилк пломбир", buyPrice: 385, sellPrice: 600 },
-    { id: 12, name: "Ренмилк сливочное", buyPrice: 313, sellPrice: 600 },
-    { id: 13, name: "Ренмилк шоколадное", buyPrice: 313, sellPrice: 600 },
-    { id: 14, name: "Шинлайн снеговик", buyPrice: 244, sellPrice: 500 },
-    { id: 15, name: "Эскимо Медведица", buyPrice: 264, sellPrice: 500 },
-    { id: 16, name: "Айза клубника", buyPrice: 209, sellPrice: 500 },
-    { id: 17, name: "Ностальгия", buyPrice: 402, sellPrice: 500 },
-    { id: 18, name: "Бомба фисташка", buyPrice: 275, sellPrice: 500 },
-    { id: 19, name: "Бомба ваниль", buyPrice: 275, sellPrice: 500 },
-    { id: 20, name: "Миша пломбир", buyPrice: 374, sellPrice: 600 },
-    { id: 21, name: "Миша черника", buyPrice: 374, sellPrice: 600 },
-    { id: 22, name: "Миша шоколадный", buyPrice: 374, sellPrice: 600 },
-    { id: 23, name: "Фруктовый лед", buyPrice: 127, sellPrice: 300 },
-
-    // Снеки и прочее
-    { id: 24, name: "Гризли (Шашлык/Краб/Курт)", buyPrice: 270, sellPrice: 600 },
-    { id: 25, name: "Семечки Джин", buyPrice: 382, sellPrice: 700 },
-    { id: 26, name: "Кириешки", buyPrice: 84, sellPrice: 300 },
-    { id: 27, name: "Лед 1 кг", buyPrice: 650, sellPrice: 1200 },
-    { id: 28, name: "Лед 500 гр", buyPrice: 450, sellPrice: 800 },
-    { id: 29, name: "Уголь (мешок)", buyPrice: 1173, sellPrice: 2500 },
-    { id: 30, name: "Розжиг", buyPrice: 932, sellPrice: 1500 }
-];
-
+            { id: 1, name: "Кола 1л", buyPrice: 492, sellPrice: 1000 },
+            { id: 2, name: "Спрайт 1л", buyPrice: 492, sellPrice: 1000 },
+            { id: 3, name: "Фанта 1л", buyPrice: 619, sellPrice: 1000 },
+            { id: 4, name: "Фьюс ти (Клуб/Дыня) 1л", buyPrice: 455, sellPrice: 900 },
+            { id: 5, name: "Фьюс ти (Персик) 1л", buyPrice: 455, sellPrice: 900 },
+            { id: 6, name: "Фьюс ти (Лимон) 1л", buyPrice: 455, sellPrice: 900 },
+            { id: 7, name: "Бон аква б/г 1л", buyPrice: 275, sellPrice: 500 },
+            { id: 8, name: "Бон аква с/г 1л", buyPrice: 275, sellPrice: 500 },
+            { id: 9, name: "Мохито", buyPrice: 700, sellPrice: 1000 },
+            { id: 10, name: "Айза шоколадное", buyPrice: 220, sellPrice: 500 },
+            { id: 11, name: "Ренмилк пломбир", buyPrice: 385, sellPrice: 600 },
+            { id: 12, name: "Ренмилк сливочное", buyPrice: 313, sellPrice: 600 },
+            { id: 13, name: "Ренмилк шоколадное", buyPrice: 313, sellPrice: 600 },
+            { id: 14, name: "Шинлайн снеговик", buyPrice: 244, sellPrice: 500 },
+            { id: 15, name: "Эскимо Медведица", buyPrice: 264, sellPrice: 500 },
+            { id: 16, name: "Айза клубника", buyPrice: 209, sellPrice: 500 },
+            { id: 17, name: "Ностальгия", buyPrice: 402, sellPrice: 500 },
+            { id: 18, name: "Бомба фисташка", buyPrice: 275, sellPrice: 500 },
+            { id: 19, name: "Бомба ваниль", buyPrice: 275, sellPrice: 500 },
+            { id: 20, name: "Миша пломбир", buyPrice: 374, sellPrice: 600 },
+            { id: 21, name: "Миша черника", buyPrice: 374, sellPrice: 600 },
+            { id: 22, name: "Миша шоколадный", buyPrice: 374, sellPrice: 600 },
+            { id: 23, name: "Миша йогурт", buyPrice: 374, sellPrice: 600 },
+            { id: 24, name: "Фруктовый лед", buyPrice: 127, sellPrice: 300 },
+            { id: 25, name: "Гризли (Шашлык/Краб/Курт)", buyPrice: 270, sellPrice: 600 },
+            { id: 26, name: "Семечки Джин", buyPrice: 382, sellPrice: 700 },
+            { id: 27, name: "Кириешки", buyPrice: 84, sellPrice: 300 },
+            { id: 28, name: "Лед 1 кг", buyPrice: 650, sellPrice: 1200 },
+            { id: 29, name: "Лед 500 гр", buyPrice: 450, sellPrice: 800 },
+            { id: 30, name: "Уголь (мешок)", buyPrice: 1173, sellPrice: 2500 },
+            { id: 31, name: "Розжиг", buyPrice: 932, sellPrice: 1500 },
+            { id: 32, name: "Игральные карты", buyPrice: 450, sellPrice: 1000 },
+            { id: 33, name: "Аренда шезлонга", buyPrice: 1500, sellPrice: 2000 }
+        ];
         let cart = {};
 
         function renderMenu() {
